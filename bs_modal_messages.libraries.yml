@@ -1,0 +1,11 @@
+bs-modal:
+  version: 1.x
+  css:
+    theme:
+      assets/css/bs_modal_messages.css: {}
+  js:
+    assets/js/bs_modal_messages.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings

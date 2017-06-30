@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Contains bs_modal_messages.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function bs_modal_messages_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the bs_modal_messages module.
+    case 'help.page.bs_modal_messages':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('BS Modal Messages') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bs_modal_messages_theme($existing, $type, $theme, $path) {
+  return [
+    'bs_modal' => [
+      'file'      => 'bs_modal_messages.page.inc',
+      'variables' => [],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function bs_modal_messages_page_attachments(array &$attachments) {
+  /** @var \Drupal\Core\Routing\AdminContext $admin_context */
+  $admin_context = \Drupal::service('router.admin_context');
+
+  if (!$admin_context->isAdminRoute()) {
+    $element = [
+      '#theme' => 'bs_modal',
+    ];
+
+    $settings = [
+      'selector' => '.alert',
+      'title'    => t('Messages'),
+      'close'    => t('Close'),
+      'modal'    => \Drupal::service('renderer')->renderRoot($element),
+    ];
+
+    $attachments['#attached']['drupalSettings']['bsModal'] = $settings;
+    $attachments['#attached']['library'][] = 'bs_modal_messages/bs-modal';
+  }
+}
