@@ -28,10 +28,10 @@ var Drupal = Drupal || {};
 
       $(context).find(settings.bsModal.selector).each(function (index) {
         var $this = $(this);
-        var $title = $this.find('h4').detach().html();
+        var $title = $this.find('h4');
 
         if ($title.length > 0) {
-          $modal.find('.modal-title').html($title);
+          $modal.find('.modal-title').html($title.detach().html());
         }
         else {
           $modal.find('.modal-title').html(settings.bsModal.title);
